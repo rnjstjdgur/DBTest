@@ -23,6 +23,18 @@ public class DBTester : MonoBehaviour
                 conn.Open();
                 Debug.Log("MySQL 연결 성공!");
 
+                string query = "SELECT * FROM gameuser";
+                using(MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    using(MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string firstCol = reader.GetValue(0).ToString();
+                        }
+                    }
+                }
+
             }
             catch (Exception ex)
             {
