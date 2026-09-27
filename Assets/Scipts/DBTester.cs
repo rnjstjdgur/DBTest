@@ -1,4 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
+using System;
+using MySqlConnector;
 
 public class DBTester : MonoBehaviour
 {
