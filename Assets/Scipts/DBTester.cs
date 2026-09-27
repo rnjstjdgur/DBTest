@@ -14,5 +14,20 @@ public class DBTester : MonoBehaviour
         string password = "1234";
 
         string connString = $"Server={server};Port={port};Database={database};Uid={user};Pwd={password};SslMode=None;";
+
+        using (MySqlConnection conn = new MySqlConnection(connString))
+        {
+            try
+            {
+                // 데이터베이스 열기
+                conn.Open();
+                Debug.Log("MySQL 연결 성공!");
+
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"MySQL 연결 또는 조회 실패: {ex.Message}");
+            }
+        }
     }
 }
