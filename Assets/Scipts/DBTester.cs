@@ -24,7 +24,29 @@ public class DBTester : MonoBehaviour
 
     private void Start()
     {
-        
+        using (MySqlConnection conn = new MySqlConnection(Names.ConnectionString))
+        {
+            try
+            {
+                conn.Open();
+                Debug.Log("MySQL 연결 성공!");
+
+                SelectAllUsers(conn);
+
+                // 데이터 추가 (INSERT)
+                InsertUser(conn, 555, "감자");
+
+                // 데이터 변경 (UPDATE)
+                UpdateUserExp(conn, 333, 100);
+
+                // 데이터 변경 (UPDATE)
+                DeleteUser(conn, 444);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"MySQL 연결 또는 조회 실패: {ex.Message}");
+            }
+        }
     }
 
     private void SelectAllUsers(MySqlConnection conn)
@@ -71,7 +93,7 @@ public class DBTester : MonoBehaviour
         User.Add(uniqueId, userName);
     }
 
-    private void UpdateUserExp(MySqlConnection conn, string userId, int newExp)
+    private void UpdateUserExp(MySqlConnection conn, int userId, int newExp)
     {
         //  string updateQuery = $"UPDATE {tableName} SET userTotalExp = {sampleTotalExp} WHERE userId = '{userId}';";
         string query = $"UPDATE {Names.GameUserTable} SET userTotalExp = @exp WHERE userId = @userId;";
